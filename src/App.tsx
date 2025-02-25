@@ -21,13 +21,9 @@ function BeforeRouterEnter() {
   const outlet = useRoutes(router)
   const location = useLocation()
   const token = localStorage.getItem('token')
+  console.log('outlet', outlet);
 
-  if (location.pathname === '/' && token) {
-    return <ToPage1 />
-  }
-  if (location.pathname !== '/' && !token) {
-    return <ToLogin />
-  }
+
   return outlet
 }
 
