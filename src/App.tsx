@@ -1,13 +1,43 @@
-import { useState } from 'react'
-import './App.scss'
+import { useEffect } from 'react'
+import { useRoutes, useLocation, useNavigate } from 'react-router-dom'
+import router from './router/index'
 
-const App = () => {
-  const [count, setCount] = useState(0)
+function ToPage1() {
+  const navigateTo = useNavigate()
+  useEffect(() => {
+    navigateTo('/')
+  }, [navigateTo])
+  return <div></div>
+}
+function ToLogin() {
+  const navigateTo = useNavigate()
+  useEffect(() => {
+    navigateTo('/login')
+  }, [navigateTo])
+  return <div>xx</div>
+}
+// 路由守卫
+function BeforeRouterEnter() {
+  const outlet = useRoutes(router)
+  const location = useLocation()
+  const token = localStorage.getItem('token')
+
+  if (location.pathname === '/' && token) {
+    return <ToPage1 />
+  }
+  if (location.pathname !== '/' && !token) {
+    return <ToLogin />
+  }
+  return outlet
+}
+
+function App() {
+  // const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div onClick={() =>setCount(0)}>count: {count}</div>
-    </>
+    <div className='App'>
+      <BeforeRouterEnter />
+    </div>
   )
 }
 
