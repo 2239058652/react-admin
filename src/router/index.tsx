@@ -1,28 +1,39 @@
-import React, { lazy } from 'react'
+import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
+import Layout from '@/Layout'; // 假设你的布局组件路径
 
-const Page1 = lazy(() => import('@/pages/Page1'))
-const Page2 = lazy(() => import('@/pages/Page2'))
-
-import Home from '@/pages/Home'
+// 使用React.lazy实现动态加载
+const Login = lazy(() => import('@/views/Login'));
+const Home = lazy(() => import('@/views/Home'));
+const Dashboard = lazy(() => import('@/views/Dashboard'));
 
 const routes = [
     {
         path: '/',
-        element: <Page1 />,
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: <Navigate to="/home" replace />
+            },
+            {
+                path: 'home',
+                element: <Home />,
+            },
+            {
+                path: 'dashboard',
+                element: <Dashboard />,
+            }
+        ]
     },
     {
-        path: '/page2',
-        element: <Page2 />,
+        path: '/login',
+        element: <Login />,
+    },
+    {
+        path: '*',
+        element: <Navigate to="/login" replace />
     }
-    // 嵌套路由到此结束
-    //   {
-    //     path: '/login',
-    //     element: <Login />
-    //   },
-    //   {
-    //     path: '*', // 重定向到首页，相当于404未找到页面
-    //     element: <Navigate to={'/page1'} />
-    //   }
-]
+];
 
-export default routes
+export default routes;
