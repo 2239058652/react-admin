@@ -2,6 +2,7 @@ import { Suspense, useEffect } from 'react';
 import { useRoutes, useLocation, useNavigate } from 'react-router-dom';
 import router from './router';
 import { Spin } from 'antd';
+import './App.scss';
 
 function RouterGuard() {
   const outlet = useRoutes(router);
