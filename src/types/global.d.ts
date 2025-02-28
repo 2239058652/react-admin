@@ -1,1 +1,3 @@
-declare module '*' 
+interface aasas {
+    a: string
+}
