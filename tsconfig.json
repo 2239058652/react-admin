@@ -28,5 +28,5 @@
         ]
       }
     },
-    "include": ["src", "types/**/*.d.ts"],
+    "include": ["vite-env.d.ts", "src", "types/**/*.d.ts"],
   }
