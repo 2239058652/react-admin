@@ -40,6 +40,7 @@ const routes = [
                     {
                         path: 'monitor',
                         name: '实时监控',
+                        access: ['user', 'admin'],
                         element: <Dashboard />,
                     }
                 ]

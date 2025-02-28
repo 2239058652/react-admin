@@ -2,6 +2,7 @@ import { Suspense, useEffect } from 'react';
 import { useRoutes, useLocation, useNavigate } from 'react-router-dom';
 import router from './router';
 import { Spin } from 'antd';
+import { AuthProvider } from './hooks/AuthContext';
 import './App.scss';
 
 function RouterGuard() {
@@ -30,7 +31,9 @@ function RouterGuard() {
 function App() {
   return (
     <div className="App">
-      <RouterGuard />
+      <AuthProvider>
+        <RouterGuard />
+      </AuthProvider>
     </div>
   );
 }
