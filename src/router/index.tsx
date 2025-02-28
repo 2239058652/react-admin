@@ -49,6 +49,7 @@ const routes = [
     ]
   },
   {
+    name: '登录',
     path: '/login',
     element: <Login />
   },
