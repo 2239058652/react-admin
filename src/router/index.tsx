@@ -17,13 +17,33 @@ const routes = [
                 element: <Navigate to="/home" replace />
             },
             {
+                name: '首页',
+                icon: '🏠',
                 path: 'home',
                 element: <Home />,
             },
             {
-                path: 'dashboard',
-                element: <Dashboard />,
-            }
+                path: 'dashboards',
+                name: '仪表盘',
+                icon: '📊',
+                children: [
+                    {
+                        index: true,
+                        element: <Navigate to="analysis" replace />,
+                        hideInMenu: true
+                    },
+                    {
+                        path: 'analysis',
+                        name: '数据分析',
+                        element: <Home />,
+                    },
+                    {
+                        path: 'monitor',
+                        name: '实时监控',
+                        element: <Dashboard />,
+                    }
+                ]
+            },
         ]
     },
     {
