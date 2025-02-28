@@ -17,14 +17,14 @@ const routes = [
                 element: <Navigate to="/home" replace />
             },
             {
-                name: '首页',
+                name: '仪表盘',
                 icon: '🏠',
                 path: 'home',
                 element: <Home />,
             },
             {
                 path: 'dashboards',
-                name: '仪表盘',
+                name: '菜单管理',
                 icon: '📊',
                 children: [
                     {

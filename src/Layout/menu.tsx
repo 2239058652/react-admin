@@ -4,6 +4,7 @@ import type { MenuProps } from 'antd';
 import { useEffect } from 'react';
 import { RouteObject } from 'react-router-dom';
 import routes from '@/router';
+import { ItemType, MenuItemType } from 'antd/es/menu/interface';
 
 // 假设你的路由类型定义如下（根据实际路由配置调整）
 type CustomRoute = RouteObject & {
@@ -47,7 +48,7 @@ function LayoutMenu() {
     const location = useLocation();
 
     // 根据你的实际路由配置调整
-    const menuItems = generateMenuItems(routes[0].children);
+    const menuItems = generateMenuItems(routes[0].children) as ItemType<MenuItemType>[];
     console.log(menuItems);
 
     return (
@@ -59,5 +60,4 @@ function LayoutMenu() {
         />
     );
 }
-
 export default LayoutMenu;
