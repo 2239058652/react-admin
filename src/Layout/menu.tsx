@@ -1,4 +1,4 @@
-import { Button, Menu } from 'antd'
+import { Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd'
 import { RouteObject } from 'react-router-dom'
@@ -56,10 +56,6 @@ function LayoutMenu() {
   // 生成带权限过滤的菜单项
   const menuItems = generateMenuItems(routes[0].children || [], user?.roles || [])
 
-  return (
-    <>
-      <Menu theme="light" mode="inline" selectedKeys={[location.pathname]} items={menuItems} />
-    </>
-  )
+  return <Menu theme="light" mode="inline" selectedKeys={[location.pathname]} items={menuItems} />
 }
 export default LayoutMenu
