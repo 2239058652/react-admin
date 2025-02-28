@@ -3,13 +3,14 @@ import { useRoutes, useLocation, useNavigate } from 'react-router-dom';
 import router from './router';
 import { Spin } from 'antd';
 import { AuthProvider } from './hooks/AuthContext';
+import useAuth from './hooks/useAuth';
 import './App.scss';
 
 function RouterGuard() {
   const outlet = useRoutes(router);
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const { token } = useAuth();
 
   useEffect(() => {
     // 路由守卫逻辑
