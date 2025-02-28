@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import Layout from '@/Layout'; // 假设你的布局组件路径
+import { MailOutlined } from '@ant-design/icons';
 
 // 使用React.lazy实现动态加载
 const Login = lazy(() => import('@/views/Login'));
@@ -25,7 +26,7 @@ const routes = [
             {
                 path: 'dashboards',
                 name: '菜单管理',
-                icon: '📊',
+                icon: <MailOutlined />,
                 children: [
                     {
                         index: true,
