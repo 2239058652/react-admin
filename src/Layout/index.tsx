@@ -1,5 +1,6 @@
-import { Outlet, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Outlet, } from 'react-router-dom';
+import { Layout, } from 'antd';
+import Menu from './menu'
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -59,22 +60,7 @@ export default function BasicLayout() {
                 theme="light"
             >
                 <div style={{ padding: 16, color: 'white' }}>Logo</div>
-                <Menu
-                    theme="light"
-                    mode="inline"
-                    items={[
-                        {
-                            key: 'home',
-                            label: <Link to="/home">首页</Link>,
-                            icon: <span>🏠</span>
-                        },
-                        {
-                            key: 'dashboard',
-                            label: <Link to="/dashboard">仪表盘</Link>,
-                            icon: <span>📊</span>
-                        }
-                    ]}
-                />
+                <Menu />
             </Sider>
 
             <Layout style={contentLayoutStyle}>
