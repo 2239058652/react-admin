@@ -20,6 +20,8 @@ function RouterGuard() {
 
   useEffect(() => {
     const checkRouteAndPermission = async () => {
+      console.log('settings', settings)
+
       if (loading) return
       const targetRoute = findRouteByPath(router, pathname)
       const isLoginPage = pathname === '/login'

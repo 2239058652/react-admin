@@ -27,5 +27,24 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  build: {
+    // 分包策略
+    rollupOptions: {
+      output: {
+        manualChunks: {}
+      }
+    },
+    chunkSizeWarningLimit: 2000,
+    minify: 'terser',
+    outDir: 'dist',
+    sourcemap: false,
+    cssCodeSplit: true,
+    terserOptions: {
+      compress: {
+        drop_debugger: true,
+        drop_console: true
+      }
+    }
   }
 })
