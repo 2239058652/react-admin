@@ -51,14 +51,14 @@ const Login: React.FC = () => {
                 <Input autoComplete="username" size="large" placeholder="请输入账号" />
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} style={{ marginTop: '5%' }}>
               <Form.Item<FieldType> label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
                 <Input.Password autoComplete="current-password" size="large" placeholder="请输入密码" />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item label={null}>
-                <Button type="primary" htmlType="submit" size="large" style={{ width: '100%' }}>
+                <Button type="primary" htmlType="submit" size="large" style={{ width: '100%', marginTop: '10%' }}>
                   登录
                 </Button>
               </Form.Item>
