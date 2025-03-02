@@ -29,8 +29,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     async (username: string, password: string) => {
       try {
         setToken('data.token')
+        setUser({
+          id: 'dsadsadsadsa',
+          username: 'dc',
+          roles: ['user']
+        })
         // // 存储 token
         localStorage.setItem('token', 'data.token')
+        navigate('/')
 
         // 模拟 API 调用
         const response = await fetch('/api/login', {

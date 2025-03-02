@@ -8,10 +8,9 @@ export const withAuth = <P extends object>(WrappedComponent: React.ComponentType
   const AuthWrapper: React.FC<P> = (props) => {
     const { user } = useAuth()
     const location = useLocation()
-
-    // 获取当前路由的权限要求
     const route = findRouteByPath(routes, location.pathname)
 
+    // 当路由需要权限且用户无权限时跳转403
     if (route?.access && !checkPermission(route.access, user?.roles)) {
       return <Navigate to="/403" replace />
     }
@@ -19,5 +18,5 @@ export const withAuth = <P extends object>(WrappedComponent: React.ComponentType
     return <WrappedComponent {...props} />
   }
 
-  return AuthWrapper // ✅ 返回组件实例
+  return AuthWrapper
 }

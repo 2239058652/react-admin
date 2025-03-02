@@ -21,9 +21,8 @@ type CustomRoute = RouteObject & {
 function generateMenuItems(routes: CustomRoute[], userRoles: string[], parentPath = ''): MenuProps['items'] {
   return routes
     .filter((route) => {
-      // return !route.hideInMenu && route.name && checkPermission(route.access, userRoles)  // 如果有问题，请取消注释，把下面俩行注释掉
-      const hasAccess = checkPermission(route.access, userRoles)
-      return !route.hideInMenu && hasAccess
+      if (route.hideInMenu || !route.name) return false
+      return checkPermission(route.access, userRoles)
     })
     .map((route) => {
       const fullPath = [parentPath, route.path]
