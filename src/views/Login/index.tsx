@@ -1,11 +1,11 @@
 // import { useNavigate } from 'react-router-dom'
-import styles from './index.module.scss'
 import Bgpic from '@/assets/img/bg.png'
 import { Button, Form, Input, Col, Row } from 'antd'
 import type { FormProps } from 'antd'
 import useAuth from '@/hooks/useAuth'
+import styles from './index.module.scss'
 
-export default function Login() {
+const Login: React.FC = () => {
   // const navigate = useNavigate()
   const { login } = useAuth()
 
@@ -37,7 +37,7 @@ export default function Login() {
         </div>
         <Form
           component="form"
-          layout={'vertical'}
+          layout="vertical"
           name="basic"
           initialValues={{ remember: true }}
           onFinish={onFinish}
@@ -69,3 +69,5 @@ export default function Login() {
     </div>
   )
 }
+
+export default Login

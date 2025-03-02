@@ -8,11 +8,11 @@ import { findRouteByPath } from '@/utils/routerUtils'
 import { checkPermission } from '@/utils/authUtils'
 import { SettingsProvider, useSettings } from '@/contexts/SettingsContext'
 import { TabsProvider, useTabs } from '@/contexts/TabsContext'
+import './App.scss'
 
 function RouterGuard() {
   const outlet = useRoutes(router)
   const { pathname } = useLocation()
-  const location = useLocation()
   const navigate = useNavigate()
   const { token, user, loading } = useAuth()
   const { addTab } = useTabs()
