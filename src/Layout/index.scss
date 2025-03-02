@@ -49,6 +49,19 @@
     padding: 24px;
     overflow: auto;
     background-color: #f5f5f5;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f0f0f0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #e4e4e7;
+      border-radius: 4px;
+    }
   }
 
   .footer {
