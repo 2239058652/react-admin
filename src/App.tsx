@@ -6,6 +6,7 @@ import { AuthProvider } from './hooks/AuthContext'
 import useAuth from './hooks/useAuth'
 import { findRouteByPath } from '@/utils/routerUtils'
 import { checkPermission } from '@/utils/authUtils'
+import { SettingsProvider } from '@/contexts/SettingsContext'
 
 function RouterGuard() {
   const outlet = useRoutes(router)
@@ -49,9 +50,11 @@ function RouterGuard() {
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
-        <RouterGuard />
-      </AuthProvider>
+      <SettingsProvider>
+        <AuthProvider>
+          <RouterGuard />
+        </AuthProvider>
+      </SettingsProvider>
     </div>
   )
 }

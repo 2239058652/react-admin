@@ -6,6 +6,7 @@ import routes from '@/router'
 import useAuth from '@/hooks/useAuth'
 import { checkPermission } from '@/utils/authUtils'
 import { useMemo } from 'react'
+import { useSettings } from '@/contexts/SettingsContext'
 
 // 假设你的路由类型定义如下（根据实际路由配置调整）
 type CustomRoute = RouteObject & {
@@ -55,6 +56,7 @@ function generateMenuItems(routes: CustomRoute[], userRoles: string[], parentPat
 function LayoutMenu() {
   const location = useLocation()
   const { user, logout } = useAuth() // 从全局状态获取用户信息
+  const { settings } = useSettings()
 
   // 生成带权限过滤的菜单项
   const menuItems = useMemo(() => generateMenuItems(routes[0].children || [], user?.roles || []), [routes, user?.roles])
