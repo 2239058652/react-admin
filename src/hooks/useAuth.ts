@@ -12,7 +12,8 @@ const useAuth = () => {
     user: context.user,
     login: context.login,
     logout: context.logout,
-    token: context.token
+    token: context.token,
+    loading: context.loading
   }
 }
 

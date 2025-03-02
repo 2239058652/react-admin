@@ -14,12 +14,13 @@ function RouterGuard() {
   const { pathname } = useLocation()
   const location = useLocation()
   const navigate = useNavigate()
-  const { token, user } = useAuth()
+  const { token, user, loading } = useAuth()
   const { addTab } = useTabs()
   const { settings } = useSettings()
 
   useEffect(() => {
     const checkRouteAndPermission = async () => {
+      if (loading) return
       const targetRoute = findRouteByPath(router, pathname)
       const isLoginPage = pathname === '/login'
       // 标签页逻辑
@@ -53,7 +54,7 @@ function RouterGuard() {
     }
 
     checkRouteAndPermission()
-  }, [token, pathname])
+  }, [token, pathname, loading])
 
   // 增加加载状态提示
   return (

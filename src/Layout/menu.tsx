@@ -1,4 +1,4 @@
-import { Menu } from 'antd'
+import { Menu, Spin } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd'
 import { RouteObject } from 'react-router-dom'
@@ -50,14 +50,14 @@ function generateMenuItems(routes: CustomRoute[], userRoles: string[], parentPat
 
 function LayoutMenu() {
   const location = useLocation()
-  const { user, logout } = useAuth() // 从全局状态获取用户信息
+  const { user, logout, loading } = useAuth() // 从全局状态获取用户信息
   const { settings } = useSettings()
 
   const normalizedPath = useMemo(() => {
     return location.pathname.replace(/\/+$/, '').split('?')[0]
   }, [location.pathname])
   // 生成带权限过滤的菜单项
-
+  if (loading || !user) return <Spin fullscreen />
   const menuItems = useMemo(() => generateMenuItems(routes[0].children || [], user?.roles || []), [routes, user?.roles])
 
   return <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
