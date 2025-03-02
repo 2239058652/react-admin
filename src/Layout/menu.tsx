@@ -5,7 +5,7 @@ import { RouteObject } from 'react-router-dom'
 import routes from '@/router'
 import useAuth from '@/hooks/useAuth'
 import { checkPermission } from '@/utils/authUtils'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSettings } from '@/contexts/SettingsContext'
 
 // 假设你的路由类型定义如下（根据实际路由配置调整）
@@ -18,14 +18,6 @@ type CustomRoute = RouteObject & {
   hideTab?: boolean
 }
 
-// // 权限检查方法
-// const checkPermission = (requiredRoles?: string[], userRoles: string[] = []) => {
-//   // 如果路由不要求权限则直接放行
-//   if (!requiredRoles || requiredRoles.length === 0) return true
-//   // 检查用户是否拥有任意一个要求的权限
-//   return userRoles.some((role) => requiredRoles.includes(role))
-// }
-
 function generateMenuItems(routes: CustomRoute[], userRoles: string[], parentPath = ''): MenuProps['items'] {
   return routes
     .filter((route) => {
@@ -34,7 +26,10 @@ function generateMenuItems(routes: CustomRoute[], userRoles: string[], parentPat
       return !route.hideInMenu && hasAccess
     })
     .map((route) => {
-      const fullPath = [parentPath, route.path].filter(Boolean).join('/').replace(/\/+/g, '/')
+      const fullPath = [parentPath, route.path]
+        .join('/')
+        .replace(/\/+/g, '/') // 处理多个斜杠
+        .replace(/\/$/, '') // 移除尾部斜杠
 
       const menuItem: any = {
         key: fullPath,
@@ -59,9 +54,13 @@ function LayoutMenu() {
   const { user, logout } = useAuth() // 从全局状态获取用户信息
   const { settings } = useSettings()
 
+  const normalizedPath = useMemo(() => {
+    return location.pathname.replace(/\/+$/, '').split('?')[0]
+  }, [location.pathname])
   // 生成带权限过滤的菜单项
+
   const menuItems = useMemo(() => generateMenuItems(routes[0].children || [], user?.roles || []), [routes, user?.roles])
 
-  return <Menu theme="light" mode="inline" selectedKeys={[location.pathname]} items={menuItems} />
+  return <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
 }
 export default LayoutMenu

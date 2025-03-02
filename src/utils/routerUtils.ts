@@ -16,16 +16,30 @@ type CustomRoute = RouteObject & {
  * @param parentPath 父级路径（用于递归处理嵌套路由）
  */
 // 更新 utils/routerUtils.ts 中的 findRouteByPath
+// utils/routerUtils.ts
 export const findRouteByPath = (routes: CustomRoute[], targetPath: string) => {
-  // 添加对嵌套路由的完整路径匹配
-  const normalizePath = (path: string) => path.replace(/\/+/g, '/').replace(/\/$/, '')
-  const currentPath = normalizePath(targetPath)
+  const normalizePath = (path: string) => {
+    return path
+      .replace(/\/+$/, '') // 移除尾部斜杠
+      .split('?')[0] // 移除查询参数
+      .replace(/\/+/g, '/') // 标准化斜杠
+  }
 
   const searchRoutes = (routes: CustomRoute[], parentPath = ''): CustomRoute | undefined => {
     for (const route of routes) {
-      const fullPath = normalizePath(`${parentPath}/${route.path || ''}`)
+      const routePath = route.path ? normalizePath(route.path) : ''
+      const fullPath = normalizePath(`${parentPath}/${routePath}`)
 
-      if (fullPath === currentPath) return route
+      // 精确匹配
+      if (fullPath === normalizePath(targetPath)) return route
+
+      // 处理动态路由 (如 /user/:id)
+      if (routePath?.includes(':')) {
+        const pattern = new RegExp(`^${routePath.replace(/:\w+/g, '([^/]+)')}$`)
+        if (pattern.test(normalizePath(targetPath))) return route
+      }
+
+      // 递归子路由
       if (route.children) {
         const found = searchRoutes(route.children, fullPath)
         if (found) return found
