@@ -6,7 +6,8 @@ import { AuthProvider } from './hooks/AuthContext'
 import useAuth from './hooks/useAuth'
 import { findRouteByPath } from '@/utils/routerUtils'
 import { checkPermission } from '@/utils/authUtils'
-import { SettingsProvider } from '@/contexts/SettingsContext'
+import { SettingsProvider, useSettings } from '@/contexts/SettingsContext'
+import { TabsProvider, useTabs } from '@/contexts/TabsContext'
 
 function RouterGuard() {
   const outlet = useRoutes(router)
@@ -14,11 +15,22 @@ function RouterGuard() {
   const location = useLocation()
   const navigate = useNavigate()
   const { token, user } = useAuth()
+  const { addTab } = useTabs()
+  const { settings } = useSettings()
 
   useEffect(() => {
     const checkRouteAndPermission = async () => {
       const targetRoute = findRouteByPath(router, pathname)
       const isLoginPage = pathname === '/login'
+      // 标签页逻辑
+      if (targetRoute?.hideTab) return
+      if (targetRoute?.name && !targetRoute.hideInMenu) {
+        addTab({
+          key: pathname,
+          path: pathname,
+          label: targetRoute.name
+        })
+      }
 
       // 路由不存在时跳转404
       if (!targetRoute) {
@@ -44,16 +56,22 @@ function RouterGuard() {
   }, [token, pathname])
 
   // 增加加载状态提示
-  return <Suspense fallback={<Spin fullscreen tip="Loading..." />}>{outlet}</Suspense>
+  return (
+    <Suspense fallback={<Spin fullscreen tip="Loading..." />}>
+      <div style={{ margin: settings.compactMode ? '8px' : '16px' }}>{outlet}</div>
+    </Suspense>
+  )
 }
 
 function App() {
   return (
     <div className="App">
       <SettingsProvider>
-        <AuthProvider>
-          <RouterGuard />
-        </AuthProvider>
+        <TabsProvider>
+          <AuthProvider>
+            <RouterGuard />
+          </AuthProvider>
+        </TabsProvider>
       </SettingsProvider>
     </div>
   )

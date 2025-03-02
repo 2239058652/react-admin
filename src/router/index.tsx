@@ -56,24 +56,28 @@ const routes = [
     name: '登录',
     path: '/login',
     hideInMenu: true,
+    hideTab: true,
     element: <Login />
   },
   {
     name: '403',
     path: '/403',
     hideInMenu: true,
+    hideTab: true,
     element: <Error403 />
   },
   {
     name: '404',
     path: '/404',
     hideInMenu: true,
+    hideTab: true,
     element: <Error404 />
   },
   {
     path: '*',
     name: '404',
     hideInMenu: true,
+    hideTab: true,
     element: <Navigate to="/404" replace />
   }
 ]

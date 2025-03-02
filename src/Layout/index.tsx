@@ -6,6 +6,7 @@ import logo from '../assets/img/logo.png'
 import './index.scss'
 import SettingsDrawer from '@/components/SettingsDrawer'
 import { useState } from 'react'
+import TabsLayout from '@/components/TabsLayout'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -28,6 +29,7 @@ export default function BasicLayout() {
           <FloatButton icon={<SettingOutlined />} onClick={() => setSettingsOpen(true)} style={{ right: 24 }} />
         </Header>
         <Content className="content">
+          <TabsLayout />
           <Outlet />
         </Content>
         <Footer className="footer">© 2024 Your Company. All rights reserved.</Footer>

@@ -15,6 +15,7 @@ type CustomRoute = RouteObject & {
   hideInMenu?: boolean
   children?: CustomRoute[]
   access?: string[]
+  hideTab?: boolean
 }
 
 // // 权限检查方法

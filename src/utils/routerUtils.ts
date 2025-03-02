@@ -6,6 +6,7 @@ type CustomRoute = RouteObject & {
   hideInMenu?: boolean
   children?: CustomRoute[]
   access?: string[]
+  hideTab?: boolean
 }
 
 /**
@@ -14,42 +15,23 @@ type CustomRoute = RouteObject & {
  * @param targetPath 要查找的目标路径
  * @param parentPath 父级路径（用于递归处理嵌套路由）
  */
-export const findRouteByPath = (
-  routes: CustomRoute[],
-  targetPath: string,
-  parentPath: string = ''
-): CustomRoute | undefined => {
-  // 标准化路径：移除开头和结尾的斜杠
-  const normalizePath = (path: string) => path.replace(/^\/+|\/+$/g, '')
-
-  // 当前处理的路径
+// 更新 utils/routerUtils.ts 中的 findRouteByPath
+export const findRouteByPath = (routes: CustomRoute[], targetPath: string) => {
+  // 添加对嵌套路由的完整路径匹配
+  const normalizePath = (path: string) => path.replace(/\/+/g, '/').replace(/\/$/, '')
   const currentPath = normalizePath(targetPath)
-  const currentParent = normalizePath(parentPath)
 
-  for (const route of routes) {
-    // 处理路由路径
-    const routePath = route.path ? normalizePath(route.path) : ''
-    const fullPath = currentParent ? `${currentParent}/${routePath}` : routePath
+  const searchRoutes = (routes: CustomRoute[], parentPath = ''): CustomRoute | undefined => {
+    for (const route of routes) {
+      const fullPath = normalizePath(`${parentPath}/${route.path || ''}`)
 
-    // 精确匹配
-    if (fullPath === currentPath) return route
-
-    // 处理动态参数路由（如 /user/:id）
-    if (routePath?.includes(':') && routePath.split('/').length === currentPath.split('/').length) {
-      const pattern = new RegExp(`^${routePath.replace(/:\w+/g, '([^/]+)')}$`)
-      if (pattern.test(currentPath)) return route
-    }
-
-    // 递归处理子路由
-    if (route.children) {
-      const found = findRouteByPath(
-        route.children,
-        targetPath,
-        fullPath // 传递当前完整路径作为父级
-      )
-      if (found) return found
+      if (fullPath === currentPath) return route
+      if (route.children) {
+        const found = searchRoutes(route.children, fullPath)
+        if (found) return found
+      }
     }
   }
 
-  return undefined
+  return searchRoutes(routes)
 }
