@@ -22,6 +22,8 @@ function LayoutMenu() {
   const location = useLocation()
   const { user, logout, loading } = useAuth() // 从全局状态获取用户信息
   const { settings } = useSettings()
+
+  // 生成菜单项
   const generateMenuItems = useCallback(
     (routes: CustomRoute[], userRoles: string[], parentPath = ''): MenuProps['items'] => {
       return routes
@@ -60,7 +62,10 @@ function LayoutMenu() {
   }, [location.pathname])
   // 生成带权限过滤的菜单项
   if (loading || !user) return <Spin fullscreen />
-  const menuItems = useMemo(() => generateMenuItems(routes[0].children || [], user?.roles || []), [routes, user?.roles])
+  const menuItems = useMemo(
+    () => generateMenuItems(routes[0].children || [], user?.roles || []),
+    [routes, user?.roles, generateMenuItems]
+  )
 
   return <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
 }
