@@ -57,11 +57,7 @@ function RouterGuard() {
   }, [token, pathname, loading])
 
   // 增加加载状态提示
-  return (
-    <Suspense fallback={<Spin fullscreen tip="Loading..." />}>
-      <div style={{ margin: settings.compactMode ? '8px' : '16px' }}>{outlet}</div>
-    </Suspense>
-  )
+  return <Suspense fallback={<Spin fullscreen tip="Loading..." />}>{outlet}</Suspense>
 }
 
 function App() {
