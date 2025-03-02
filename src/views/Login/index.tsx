@@ -1,26 +1,28 @@
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import styles from './index.module.scss'
 import Bgpic from '@/assets/img/bg.png'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Col, Row } from 'antd'
 import type { FormProps } from 'antd'
+import useAuth from '@/hooks/useAuth'
 
 export default function Login() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const { login } = useAuth()
 
   type FieldType = {
     username?: string
     password?: string
-    remember?: string
   }
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     console.log('Success:', values)
-    localStorage.setItem('token', 'your-auth-token')
-    navigate('/home', { replace: true })
+    await login(values.username!, values.password!)
+    // localStorage.setItem('token', 'your-auth-token')
+    // navigate('/home')
   }
 
   return (
@@ -34,26 +36,34 @@ export default function Login() {
           <div className={styles.name}>抖发货源后台管理系统</div>
         </div>
         <Form
+          component="form"
           layout={'vertical'}
           name="basic"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          style={{ marginTop: '5%' }}
         >
-          <Form.Item<FieldType> label="账号" name="username" rules={[{ required: true, message: '请输入账号' }]}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item<FieldType> label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item label={null}>
-            <Button type="primary" htmlType="submit">
-              登录
-            </Button>
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item<FieldType> label="账号" name="username" rules={[{ required: true, message: '请输入账号' }]}>
+                <Input autoComplete="username" size="large" placeholder="请输入账号" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item<FieldType> label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
+                <Input.Password autoComplete="current-password" size="large" placeholder="请输入密码" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item label={null}>
+                <Button type="primary" htmlType="submit" size="large" style={{ width: '100%' }}>
+                  登录
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </div>
     </div>

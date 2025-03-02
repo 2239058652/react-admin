@@ -2,11 +2,14 @@ import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import Layout from '@/Layout' // 假设你的布局组件路径
 import { MailOutlined } from '@ant-design/icons'
+import { withAuth } from '@/hooks/withAuth'
 
 // 使用React.lazy实现动态加载
 const Login = lazy(() => import('@/views/Login'))
 const Home = lazy(() => import('@/views/Home'))
-const Dashboard = lazy(() => import('@/views/Dashboard'))
+const Dashboard = withAuth(lazy(() => import('@/views/Dashboard')))
+const Error403 = lazy(() => import('@/views/Error/403'))
+const Error404 = lazy(() => import('@/views/Error/404'))
 
 const routes = [
   {
@@ -15,13 +18,14 @@ const routes = [
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />
+        element: <Navigate to="/home" replace />,
+        hideInMenu: true
       },
       {
         name: '仪表盘',
         icon: <MailOutlined />,
         path: 'home',
-        element: <Home />
+        element: <Dashboard />
       },
       {
         path: 'dashboards',
@@ -41,8 +45,8 @@ const routes = [
           {
             path: 'monitor',
             name: '实时监控',
-            access: ['user', 'admin'],
-            element: <Dashboard />
+            element: <Dashboard />,
+            access: ['user', 'admin']
           }
         ]
       }
@@ -51,11 +55,26 @@ const routes = [
   {
     name: '登录',
     path: '/login',
+    hideInMenu: true,
     element: <Login />
   },
   {
+    name: '403',
+    path: '/403',
+    hideInMenu: true,
+    element: <Error403 />
+  },
+  {
+    name: '404',
+    path: '/404',
+    hideInMenu: true,
+    element: <Error404 />
+  },
+  {
     path: '*',
-    element: <Navigate to="/login" replace />
+    name: '404',
+    hideInMenu: true,
+    element: <Navigate to="/404" replace />
   }
 ]
 

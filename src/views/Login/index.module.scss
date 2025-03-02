@@ -45,3 +45,13 @@
     }
   }
 }
+
+:global {
+  .ant-input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    color: #b2b9c4;
+    line-height: 14px;
+    letter-spacing: 1px;
+  }
+}
