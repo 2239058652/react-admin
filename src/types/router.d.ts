@@ -18,3 +18,14 @@ declare module 'react-router-dom' {
     children?: CustomRouteObject[]
   }
 }
+
+declare global {
+  type CustomRoute = RouteObject & {
+    name?: string
+    icon?: React.ReactNode
+    hideInMenu?: boolean
+    children?: CustomRoute[]
+    access?: string[]
+    hideTab?: boolean
+  }
+}

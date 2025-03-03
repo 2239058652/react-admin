@@ -31,10 +31,10 @@ export default function BasicLayout() {
           )}
         </Header>
         <Content className="content">
-          <TabsLayout />
+          {settingsOpen && <TabsLayout />}
           <Outlet />
         </Content>
-        <Footer className="footer">© 2024 Your Company. All rights reserved.</Footer>
+        {settingsOpen && <Footer className="footer">© 2024 Your Company. All rights reserved.</Footer>}
       </Layout>
 
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />

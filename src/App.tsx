@@ -6,22 +6,19 @@ import { AuthProvider } from './hooks/AuthContext'
 import useAuth from './hooks/useAuth'
 import { findRouteByPath } from '@/utils/routerUtils'
 import { checkPermission } from '@/utils/authUtils'
-import { SettingsProvider, useSettings } from '@/contexts/SettingsContext'
+import { SettingsProvider } from '@/contexts/SettingsContext'
 import { TabsProvider, useTabs } from '@/contexts/TabsContext'
 import './App.scss'
 
-function RouterGuard() {
+const RouterGuard = () => {
   const outlet = useRoutes(router)
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { token, user, loading } = useAuth()
   const { addTab } = useTabs()
-  const { settings } = useSettings()
 
   useEffect(() => {
     const checkRouteAndPermission = async () => {
-      // console.log('settings', settings)
-
       if (loading) return
       const targetRoute = findRouteByPath(router, pathname)
       const isLoginPage = pathname === '/login'

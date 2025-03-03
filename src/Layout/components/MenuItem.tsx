@@ -1,27 +1,18 @@
 import { Menu, Spin } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd'
-import { RouteObject } from 'react-router-dom'
 import routes from '@/router'
 import useAuth from '@/hooks/useAuth'
 import { checkPermission } from '@/utils/authUtils'
 import { useCallback, useEffect, useMemo } from 'react'
-import { useSettings } from '@/contexts/SettingsContext'
+// import { useSettings } from '@/contexts/SettingsContext'
 
 // 假设你的路由类型定义如下（根据实际路由配置调整）
-type CustomRoute = RouteObject & {
-  name?: string
-  icon?: React.ReactNode
-  hideInMenu?: boolean
-  children?: CustomRoute[]
-  access?: string[]
-  hideTab?: boolean
-}
 
 function LayoutMenu() {
   const location = useLocation()
   const { user, logout, loading } = useAuth() // 从全局状态获取用户信息
-  const { settings } = useSettings()
+  // const { settings } = useSettings()
 
   // 生成菜单项
   const generateMenuItems = useCallback(

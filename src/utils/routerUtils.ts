@@ -1,14 +1,3 @@
-import { RouteObject } from 'react-router-dom'
-
-type CustomRoute = RouteObject & {
-  name?: string
-  icon?: React.ReactNode
-  hideInMenu?: boolean
-  children?: CustomRoute[]
-  access?: string[]
-  hideTab?: boolean
-}
-
 /**
  * 根据路径查找路由配置（递归实现）
  * @param routes 路由配置数组
