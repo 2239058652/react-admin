@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Layout, FloatButton } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
-import Menu from './menu'
+import Menu from './components/MenuItem'
 import logo from '../assets/img/logo.png'
 import './index.scss'
 import SettingsDrawer from '@/components/SettingsDrawer'
@@ -26,7 +26,9 @@ export default function BasicLayout() {
       <Layout className="content-layout">
         <Header className="header">
           后台管理系统
-          <FloatButton icon={<SettingOutlined />} onClick={() => setSettingsOpen(true)} style={{ right: 24 }} />
+          {settingsOpen && (
+            <FloatButton icon={<SettingOutlined />} onClick={() => setSettingsOpen(true)} style={{ right: 24 }} />
+          )}
         </Header>
         <Content className="content">
           <TabsLayout />
