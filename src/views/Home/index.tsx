@@ -1,11 +1,12 @@
+import { Card } from 'antd'
 import React from 'react'
 
 const Home: React.FC = () => {
   return (
-    <div style={{ height: '130vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Card style={{ width: '100%', height: '100%' }} title="首页">
       <h1>首页</h1>
       <p>欢迎来到首页！</p>
-    </div>
+    </Card>
   )
 }
 

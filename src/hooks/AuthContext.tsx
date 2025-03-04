@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react'
+import { createContext, useState, useCallback, ReactNode, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // 用户类型定义
@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null
   token: string
   login: (username: string, password: string) => Promise<void>
-  logout: () => void
+  loginout: () => void
   loading: boolean
 }
 
@@ -28,7 +28,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
 
   const login = useCallback(
-    async (username: string, password: string) => {
+    async (_username: string, _password: string) => {
+      console.log(_username, _password)
+
       try {
         setToken('data.token')
         setUser({
@@ -78,7 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     [navigate]
   )
 
-  const logout = useCallback(() => {
+  const loginout = useCallback(() => {
     setUser(null)
     setToken('')
     localStorage.removeItem('token')
@@ -100,7 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // }
           setUser(localUser)
         } catch {
-          logout()
+          loginout()
           setLoading(false)
         } finally {
           setLoading(false)
@@ -110,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     checkAuth()
-  }, [token, user, logout])
+  }, [token, user, loginout])
 
-  return <AuthContext.Provider value={{ user, token, login, logout, loading }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, token, login, loginout, loading }}>{children}</AuthContext.Provider>
 }

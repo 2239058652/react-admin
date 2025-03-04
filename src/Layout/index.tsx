@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Layout, FloatButton } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
-import Menu from './components/MenuItem'
+import Menu from './components/Menu'
 import logo from '../assets/img/logo.png'
 import './index.scss'
 import SettingsDrawer from '@/components/SettingsDrawer'

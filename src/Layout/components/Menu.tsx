@@ -4,14 +4,14 @@ import type { MenuProps } from 'antd'
 import routes from '@/router'
 import useAuth from '@/hooks/useAuth'
 import { checkPermission } from '@/utils/authUtils'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 // import { useSettings } from '@/contexts/SettingsContext'
 
 // 假设你的路由类型定义如下（根据实际路由配置调整）
 
 function LayoutMenu() {
   const location = useLocation()
-  const { user, logout, loading } = useAuth() // 从全局状态获取用户信息
+  const { user, loading } = useAuth() // 从全局状态获取用户信息
   // const { settings } = useSettings()
 
   // 生成菜单项
@@ -23,12 +23,9 @@ function LayoutMenu() {
           return checkPermission(route.access, userRoles)
         })
         .map((route) => {
-          const fullPath = [parentPath, route.path]
-            .join('/')
-            .replace(/\/+/g, '/') // 处理多个斜杠
-            .replace(/\/$/, '') // 移除尾部斜杠
+          const fullPath = [parentPath, route.path].join('/').replace(/\/+/g, '/').replace(/\/$/, '')
 
-          const menuItem: any = {
+          const menuItem: MenuProps['items'] | Record<string, any> = {
             key: fullPath,
             label: route.children ? <span>{route.name}</span> : <Link to={fullPath}>{route.name}</Link>,
             icon: route.icon
@@ -43,7 +40,7 @@ function LayoutMenu() {
 
           return menuItem
         })
-        .filter(Boolean) as MenuProps['items'] // 过滤掉null项
+        .filter(Boolean) as MenuProps['items']
     },
     []
   )

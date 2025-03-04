@@ -22,21 +22,6 @@ const RouterGuard = () => {
       if (loading) return
       const targetRoute = findRouteByPath(router, pathname)
       const isLoginPage = pathname === '/login'
-      // 标签页逻辑
-      if (targetRoute?.hideTab) return
-      if (targetRoute?.name && !targetRoute.hideInMenu) {
-        addTab({
-          key: pathname,
-          path: pathname,
-          label: targetRoute.name
-        })
-      }
-
-      // 路由不存在时跳转404
-      if (!targetRoute) {
-        navigate('/404', { replace: true })
-        return
-      }
 
       if (!token) {
         return isLoginPage ? undefined : navigate('/login')
@@ -47,8 +32,17 @@ const RouterGuard = () => {
       }
 
       // 权限校验
-      if (!checkPermission(targetRoute.access, user?.roles)) {
+      if (!checkPermission(targetRoute?.access, user?.roles)) {
         navigate('/403', { replace: true })
+      }
+      // 标签页逻辑
+      if (targetRoute?.hideTab) return
+      if (targetRoute?.name && !targetRoute.hideInMenu) {
+        addTab({
+          key: pathname,
+          path: pathname,
+          label: targetRoute.name
+        })
       }
     }
 
