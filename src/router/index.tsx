@@ -1,14 +1,7 @@
-import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
-import Layout from '@/Layout' // 假设你的布局组件路径
+import Layout from '@/Layout'
 import { MailOutlined } from '@ant-design/icons'
-
-// 使用React.lazy实现动态加载
-const Login = lazy(() => import('@/views/Login'))
-const Home = lazy(() => import('@/views/Home'))
-const Dashboard = lazy(() => import('@/views/Dashboard'))
-const Error403 = lazy(() => import('@/views/Error/403'))
-const Error404 = lazy(() => import('@/views/Error/404'))
+import { UseLazyLoad } from '@/hooks/useLazyLoad'
 
 const routes = [
   {
@@ -24,7 +17,7 @@ const routes = [
         name: '仪表盘',
         icon: <MailOutlined />,
         path: 'home',
-        element: <Dashboard />
+        element: UseLazyLoad('Dashboard')
       },
       {
         path: 'dashboards',
@@ -39,12 +32,12 @@ const routes = [
           {
             path: 'analysis',
             name: '数据分析',
-            element: <Home />
+            element: UseLazyLoad('Home')
           },
           {
             path: 'monitor',
             name: '实时监控',
-            element: <Dashboard />,
+            element: UseLazyLoad('Dashboard'),
             access: ['admin', 'user']
           }
         ]
@@ -56,21 +49,21 @@ const routes = [
     path: '/login',
     hideInMenu: true,
     hideTab: true,
-    element: <Login />
+    element: UseLazyLoad('Login')
   },
   {
     name: '403',
     path: '/403',
     hideInMenu: true,
     hideTab: true,
-    element: <Error403 />
+    element: UseLazyLoad('Error', '403')
   },
   {
     name: '404',
     path: '/404',
     hideInMenu: true,
     hideTab: true,
-    element: <Error404 />
+    element: UseLazyLoad('Error', '404')
   },
   {
     path: '*',

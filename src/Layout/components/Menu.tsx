@@ -49,11 +49,12 @@ function LayoutMenu() {
     return location.pathname.replace(/\/+$/, '').split('?')[0]
   }, [location.pathname])
   // 生成带权限过滤的菜单项
-  if (loading || !user) return <Spin fullscreen />
   const menuItems = useMemo(
-    () => generateMenuItems(routes[0].children || [], user?.roles || []),
-    [routes, user?.roles, generateMenuItems]
+    () => (user ? generateMenuItems(routes[0].children || [], user?.roles || []) : []),
+    [routes, user?.roles, generateMenuItems, user]
   )
+
+  if (loading || !user) return <Spin fullscreen />
 
   return <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
 }

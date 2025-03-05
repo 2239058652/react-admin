@@ -3,9 +3,9 @@ import { Card, Input } from 'antd'
 
 const Dashboard: React.FC = () => {
   return (
-    <Card title="Dashboard">
+    <Card style={{ width: '100%', minHeight: '100%' }}>
       <div>
-        <h1>仪表盘</h1>
+        <h1>Dashboard</h1>
         <p>这是仪表盘页面。</p>
         <Input placeholder="Basic usage" />
       </div>

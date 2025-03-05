@@ -4,14 +4,11 @@
  * @param targetPath 要查找的目标路径
  * @param parentPath 父级路径（用于递归处理嵌套路由）
  */
-// 更新 utils/routerUtils.ts 中的 findRouteByPath
+
 // utils/routerUtils.ts
 export const findRouteByPath = (routes: CustomRoute[], targetPath: string) => {
   const normalizePath = (path: string) => {
-    return path
-      .replace(/\/+$/, '') // 移除尾部斜杠
-      .split('?')[0] // 移除查询参数
-      .replace(/\/+/g, '/') // 标准化斜杠
+    return path.replace(/\/+$/, '').split('?')[0].replace(/\/+/g, '/')
   }
 
   const searchRoutes = (routes: CustomRoute[], parentPath = ''): CustomRoute | undefined => {

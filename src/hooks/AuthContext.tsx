@@ -29,8 +29,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = useCallback(
     async (_username: string, _password: string) => {
-      console.log(_username, _password)
-
       try {
         setToken('data.token')
         setUser({
@@ -81,17 +79,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   )
 
   const loginout = useCallback(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setUser(null)
     setToken('')
-    localStorage.removeItem('token')
-    localStorage.clear()
-    navigate('/login')
+    navigate('/login', { replace: true })
   }, [navigate])
 
   useEffect(() => {
     const checkAuth = async () => {
       if (token && !user) {
-        const localUser = JSON.parse(localStorage.getItem('user') ?? '')
+        const localUser = localStorage.getItem('user')
         try {
           setLoading(true)
           // const userData = await fetchUserData(token);
@@ -100,7 +98,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           //   username: 'John Doe',
           //   roles: ['admin']
           // }
-          setUser(localUser)
+          if (localUser) {
+            setUser(JSON.parse(localUser))
+          }
         } catch {
           loginout()
           setLoading(false)
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     checkAuth()
-  }, [token, user, loginout])
+  }, [token, user])
 
   return <AuthContext.Provider value={{ user, token, login, loginout, loading }}>{children}</AuthContext.Provider>
 }
