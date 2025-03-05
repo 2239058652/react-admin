@@ -1,57 +1,8 @@
-import { Suspense, useEffect } from 'react'
-import { useRoutes, useLocation, useNavigate } from 'react-router-dom'
-import router from '@/router'
-import { Spin } from 'antd'
 import { AuthProvider } from './hooks/AuthContext'
-import useAuth from './hooks/useAuth'
-import { findRouteByPath } from '@/utils/routerUtils'
-import { checkPermission } from '@/utils/authUtils'
 import { SettingsProvider } from '@/contexts/SettingsContext'
-import { TabsProvider, useTabs } from '@/contexts/TabsContext'
+import { TabsProvider } from '@/contexts/TabsContext'
+import { UseRouterGuard } from '@/hooks/RouterGuard'
 import './App.scss'
-
-const RouterGuard = () => {
-  const outlet = useRoutes(router)
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
-  const { token, user, loading } = useAuth()
-  const { addTab } = useTabs()
-
-  useEffect(() => {
-    const checkRouteAndPermission = async () => {
-      if (loading) return
-      const targetRoute = findRouteByPath(router, pathname)
-      const isLoginPage = pathname === '/login'
-
-      if (!token) {
-        return isLoginPage ? undefined : navigate('/login')
-      }
-      if (token && isLoginPage) {
-        navigate('/', { replace: true })
-        return
-      }
-
-      // 权限校验
-      if (!checkPermission(targetRoute?.access, user?.roles)) {
-        navigate('/403', { replace: true })
-      }
-      // 标签页逻辑
-      if (targetRoute?.hideTab) return
-      if (targetRoute?.name && !targetRoute.hideInMenu) {
-        addTab({
-          key: pathname,
-          path: pathname,
-          label: targetRoute.name
-        })
-      }
-    }
-
-    checkRouteAndPermission()
-  }, [token, pathname, loading])
-
-  // 增加加载状态提示
-  return <Suspense fallback={<Spin fullscreen tip="Loading..." />}>{outlet}</Suspense>
-}
 
 function App() {
   return (
@@ -59,7 +10,7 @@ function App() {
       <SettingsProvider>
         <TabsProvider>
           <AuthProvider>
-            <RouterGuard />
+            <UseRouterGuard />
           </AuthProvider>
         </TabsProvider>
       </SettingsProvider>

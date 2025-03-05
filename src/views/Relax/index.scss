@@ -1,0 +1,106 @@
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background: #2c3e50;
+  padding: 20px;
+}
+
+.game-header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.game-board {
+  width: 90vmin;
+  height: 90vmin;
+  max-width: 600px;
+  max-height: 600px;
+  display: grid;
+  background: #34495e;
+  border: 2px solid #ecf0f1;
+  border-radius: 5px;
+}
+
+.cell {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.snake-body {
+  background: #2ecc71;
+  border-radius: 25%;
+}
+
+.snake-head {
+  background: #27ae60;
+  border-radius: 35%;
+}
+
+.food {
+  background: #e74c3c;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  background: #3498db;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+.direction-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.direction-keys button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px 40px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}

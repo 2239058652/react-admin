@@ -52,6 +52,20 @@ const routes = [
     element: UseLazyLoad('Login')
   },
   {
+    name: 'Relax',
+    path: '/relax',
+    hideInMenu: true,
+    hideTab: true,
+    element: UseLazyLoad('Relax')
+  },
+  {
+    name: '测试',
+    path: '/test',
+    hideInMenu: true,
+    hideTab: true,
+    element: UseLazyLoad('HandleTest')
+  },
+  {
     name: '403',
     path: '/403',
     hideInMenu: true,
