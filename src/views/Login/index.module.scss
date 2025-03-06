@@ -3,47 +3,45 @@
   height: 100vh;
   display: flex;
   overflow: hidden;
-}
-
-.bg {
-  width: 824px;
-  height: 100vh;
-
-  img {
+  .bg {
     width: 824px;
     height: 100%;
-    object-fit: fill;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
   }
-}
 
-.loginBox {
-  flex: 1;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .loginForm {
+  .loginBox {
+    flex: 1;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
 
-    .title {
-      height: 42px;
-      font-weight: 400;
-      font-size: 30px;
-      color: #111111;
-      line-height: 42px;
-    }
-    .name {
-      padding: 13px 0 4px 0;
-      height: 25px;
-      font-weight: 400;
-      font-size: 18px;
-      color: #838383;
-      line-height: 25px;
+    .loginForm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      .title {
+        height: 42px;
+        font-weight: 400;
+        font-size: 30px;
+        color: #111111;
+        line-height: 42px;
+      }
+      .name {
+        padding: 13px 0 4px 0;
+        height: 25px;
+        font-weight: 400;
+        font-size: 18px;
+        color: #838383;
+        line-height: 25px;
+      }
     }
   }
 }

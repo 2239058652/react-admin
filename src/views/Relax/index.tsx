@@ -38,25 +38,26 @@ const Relax = () => {
     return grid
   }, [snake, food])
 
-  // 生成新食物
-  const generateFood = useCallback(() => {
+  // 新食物生成函数
+  const generateNewFood = useCallback((currentSnake: Position[]) => {
     let newFood: Position
     do {
       newFood = {
         x: Math.floor(Math.random() * GRID_SIZE),
         y: Math.floor(Math.random() * GRID_SIZE)
       }
-    } while (snake.some((segment) => segment.x === newFood.x && segment.y === newFood.y))
-    setFood(newFood)
-  }, [snake])
+    } while (currentSnake.some((segment) => segment.x === newFood.x && segment.y === newFood.y))
+    return newFood
+  }, [])
 
-  // 移动蛇
+  // 移动蛇的逻辑
   const moveSnake = useCallback(() => {
     if (gameOver) return
 
     setSnake((prevSnake) => {
       const head = { ...prevSnake[0] }
 
+      // 方向移动计算
       switch (direction) {
         case 'UP':
           head.y--
@@ -72,32 +73,33 @@ const Relax = () => {
           break
       }
 
-      // 碰撞检测
-      if (
+      // 碰撞检测（使用更新前的蛇身）
+      const willCollide =
         head.x < 0 ||
         head.x >= GRID_SIZE ||
         head.y < 0 ||
         head.y >= GRID_SIZE ||
         prevSnake.some((segment) => segment.x === head.x && segment.y === head.y)
-      ) {
+
+      if (willCollide) {
         setGameOver(true)
         return prevSnake
       }
 
-      // 创建新蛇
+      // 创建新蛇身
       const newSnake = [head, ...prevSnake]
 
       // 吃食物检测
       if (head.x === food.x && head.y === food.y) {
         setScore((s) => s + 10)
-        generateFood()
-      } else {
-        newSnake.pop()
+        const newFood = generateNewFood(newSnake) // 使用新蛇身生成食物
+        setFood(newFood)
+        return newSnake // 保持长度
       }
 
-      return newSnake
+      return newSnake.slice(0, -1) // 正常移动
     })
-  }, [direction, food.x, food.y, gameOver, generateFood])
+  }, [direction, food, gameOver, generateNewFood])
 
   // 方向控制
   const changeDirection = useCallback(
@@ -117,12 +119,13 @@ const Relax = () => {
 
   // 重置游戏
   const resetGame = useCallback(() => {
-    setSnake([{ x: 10, y: 10 }])
+    const initialSnake = [{ x: 10, y: 10 }]
+    setSnake(initialSnake)
     setDirection('RIGHT')
     setScore(0)
     setGameOver(false)
-    generateFood()
-  }, [generateFood])
+    setFood(generateNewFood(initialSnake))
+  }, [generateNewFood])
 
   // 键盘控制
   useEffect(() => {
@@ -147,14 +150,9 @@ const Relax = () => {
   useEffect(() => {
     if (!gameOver) {
       const id = setInterval(moveSnake, GAME_SPEED)
-      return () => clearInterval(id) // 直接通过闭包获取 interval ID
+      return () => clearInterval(id)
     }
   }, [gameOver, moveSnake])
-
-  // 初始化食物
-  useEffect(() => {
-    generateFood()
-  }, [generateFood])
 
   return (
     <div className="game-container">

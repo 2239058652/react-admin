@@ -34,7 +34,6 @@ function LayoutMenu() {
           // 递归处理子路由
           if (route.children) {
             menuItem.children = generateMenuItems(route.children, userRoles, fullPath)
-            // 如果子菜单无有效项则过滤掉空菜单
             if (!menuItem.children || menuItem.children.length === 0) return null
           }
 
@@ -48,6 +47,7 @@ function LayoutMenu() {
   const normalizedPath = useMemo(() => {
     return location.pathname.replace(/\/+$/, '').split('?')[0]
   }, [location.pathname])
+
   // 生成带权限过滤的菜单项
   const menuItems = useMemo(
     () => (user ? generateMenuItems(routes[0].children || [], user?.roles || []) : []),
