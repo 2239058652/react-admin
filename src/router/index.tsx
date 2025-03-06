@@ -1,6 +1,14 @@
 import { Navigate } from 'react-router-dom'
 import Layout from '@/Layout'
-import { MailOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  FundProjectionScreenOutlined,
+  OrderedListOutlined,
+  ProductOutlined,
+  SettingOutlined,
+  SolutionOutlined,
+  UserOutlined,
+  WalletOutlined
+} from '@ant-design/icons'
 import { UseLazyLoad } from '@/hooks/useLazyLoad'
 
 const routes = [
@@ -15,14 +23,14 @@ const routes = [
       },
       {
         name: '仪表盘',
-        icon: <MailOutlined />,
+        icon: <FundProjectionScreenOutlined />,
         path: 'dashboard',
         element: UseLazyLoad('Dashboard')
       },
       {
         path: 'orders',
         name: '订单管理',
-        icon: <MailOutlined />,
+        icon: <OrderedListOutlined />,
         children: [
           {
             index: true,
@@ -51,7 +59,7 @@ const routes = [
       {
         path: 'goods',
         name: '商品管理',
-        icon: <MailOutlined />,
+        icon: <ProductOutlined />,
         children: [
           {
             index: true,
@@ -90,7 +98,7 @@ const routes = [
       {
         path: 'roles',
         name: '角色管理',
-        icon: <MailOutlined />,
+        icon: <SolutionOutlined />,
         children: [
           {
             index: true,
@@ -107,7 +115,7 @@ const routes = [
       {
         path: 'cashes',
         name: '财务管理',
-        icon: <MailOutlined />,
+        icon: <WalletOutlined />,
         children: [
           {
             index: true,
@@ -124,7 +132,7 @@ const routes = [
       {
         path: 'systems',
         name: '系统配置',
-        icon: <MailOutlined />,
+        icon: <SettingOutlined />,
         children: [
           {
             index: true,

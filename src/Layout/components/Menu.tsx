@@ -1,4 +1,4 @@
-import { Menu, Spin } from 'antd'
+import { ConfigProvider, Menu, Spin } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd'
 import routes from '@/router'
@@ -56,6 +56,20 @@ function LayoutMenu() {
 
   if (loading || !user) return <Spin fullscreen />
 
-  return <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
+  return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            itemHeight: 45,
+            itemSelectedBg: '#ebebeb',
+            itemSelectedColor: '#165DFF'
+          }
+        }
+      }}
+    >
+      <Menu theme="light" mode="inline" selectedKeys={[normalizedPath]} items={menuItems} />
+    </ConfigProvider>
+  )
 }
 export default LayoutMenu
