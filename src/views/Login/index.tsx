@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     console.log('Success:', values)
     await login(values.username!, values.password!)
     // localStorage.setItem('token', 'your-auth-token')
-    // navigate('/home')
+    // navigate('/')
   }
 
   return (

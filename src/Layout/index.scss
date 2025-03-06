@@ -42,6 +42,67 @@
     height: 60px;
     line-height: 60px;
     padding-left: 24px;
+
+    .header-modal {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .header-modal-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #F0F2F7;
+          }
+        }
+
+        .header-modal-content-user {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+
+          span {
+            font-weight: 400;
+            font-size: 14px;
+            color: #666666;
+
+            img[alt="avatar"] {
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+        }
+
+        .arrow-down {
+          margin-left: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 32px;
+          height: 100%;
+          cursor: pointer;
+
+          img {
+            width: 7px;
+            height: 5px;
+            object-fit: cover;
+          }
+        }
+      }
+    }
   }
 
   .content {

@@ -1,11 +1,10 @@
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Layout, FloatButton } from 'antd'
-import { SettingOutlined } from '@ant-design/icons'
+import { Layout } from 'antd'
 import SettingsDrawer from '@/components/SettingsDrawer'
 import { useState } from 'react'
 import TabsLayout from '@/components/TabsLayout'
-import useAuth from '@/hooks/useAuth'
-import Menu from './components/Menu'
+import MenuModal from './components/Menu'
+import HeaderModal from './components/Header'
 import logo from '../assets/img/logo.png'
 import './index.scss'
 
@@ -14,10 +13,6 @@ const { Header, Footer, Sider, Content } = Layout
 export default function BasicLayout() {
   const navigate = useNavigate()
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const { loginout } = useAuth()
-  const handleLoginOut = () => {
-    loginout()
-  }
 
   return (
     <Layout className="layout">
@@ -25,15 +20,12 @@ export default function BasicLayout() {
         <div className="logo">
           <img src={logo} alt="logo" onClick={() => navigate('/', { replace: true })} />
         </div>
-        <Menu />
+        <MenuModal />
       </Sider>
 
       <Layout className="content-layout">
         <Header className="header">
-          <div onClick={handleLoginOut}>后台管理系统</div>
-          {settingsOpen && (
-            <FloatButton icon={<SettingOutlined />} onClick={() => setSettingsOpen(true)} style={{ right: 24 }} />
-          )}
+          <HeaderModal settingsOpen={settingsOpen} setSettingsOpen={setSettingsOpen} />
         </Header>
         <Content className="content">
           {settingsOpen && <TabsLayout />}

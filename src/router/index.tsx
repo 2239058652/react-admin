@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import Layout from '@/Layout'
-import { MailOutlined } from '@ant-design/icons'
+import { MailOutlined, UserOutlined } from '@ant-design/icons'
 import { UseLazyLoad } from '@/hooks/useLazyLoad'
 
 const routes = [
@@ -10,35 +10,131 @@ const routes = [
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />,
+        element: <Navigate to="/dashboard" replace />,
         hideInMenu: true
       },
       {
         name: '仪表盘',
         icon: <MailOutlined />,
-        path: 'home',
+        path: 'dashboard',
         element: UseLazyLoad('Dashboard')
       },
       {
-        path: 'dashboards',
-        name: '菜单管理',
+        path: 'orders',
+        name: '订单管理',
         icon: <MailOutlined />,
         children: [
           {
             index: true,
-            element: <Navigate to="analysis" replace />,
+            element: <Navigate to="/orders/analysis" replace />,
             hideInMenu: true
           },
           {
             path: 'analysis',
-            name: '数据分析',
+            name: '订单列表',
             element: UseLazyLoad('Home')
           },
           {
             path: 'monitor',
-            name: '实时监控',
+            name: '售后订单',
             element: UseLazyLoad('Dashboard'),
             access: ['admin', 'user']
+          },
+          {
+            path: 'monitors',
+            name: '异常订单',
+            element: UseLazyLoad('Dashboard'),
+            access: ['admin', 'user']
+          }
+        ]
+      },
+      {
+        path: 'goods',
+        name: '商品管理',
+        icon: <MailOutlined />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/goods/analysis" replace />,
+            hideInMenu: true
+          },
+          {
+            path: 'analysis',
+            name: '商品列表',
+            element: UseLazyLoad('Home')
+          }
+        ]
+      },
+      {
+        path: 'usermanage',
+        name: '用户管理',
+        icon: <UserOutlined />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/usermanage/users" replace />,
+            hideInMenu: true
+          },
+          {
+            path: 'users',
+            name: '用户列表',
+            element: UseLazyLoad('UserManage/Users')
+          },
+          {
+            path: 'stores',
+            name: '用户店铺',
+            element: UseLazyLoad('UserManage/Stores')
+          }
+        ]
+      },
+      {
+        path: 'roles',
+        name: '角色管理',
+        icon: <MailOutlined />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/roles/analysis" replace />,
+            hideInMenu: true
+          },
+          {
+            path: 'analysis',
+            name: '系统设置',
+            element: UseLazyLoad('Home')
+          }
+        ]
+      },
+      {
+        path: 'cashes',
+        name: '财务管理',
+        icon: <MailOutlined />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/cashes/analysis" replace />,
+            hideInMenu: true
+          },
+          {
+            path: 'analysis',
+            name: '系统设置',
+            element: UseLazyLoad('Home')
+          }
+        ]
+      },
+      {
+        path: 'systems',
+        name: '系统配置',
+        icon: <MailOutlined />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/systems/analysis" replace />,
+            hideInMenu: true
+          },
+          {
+            path: 'analysis',
+            name: '系统设置',
+            element: UseLazyLoad('Home')
           }
         ]
       }

@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken('data.token')
         setUser({
           id: 'dsadsadsadsa',
-          username: 'dc',
+          username: 'admin',
           roles: ['user']
         })
         // // 存储 token
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           'user',
           JSON.stringify({
             id: 'dsadsadsadsa',
-            username: 'dc',
+            username: 'admin',
             roles: ['user']
           })
         )
