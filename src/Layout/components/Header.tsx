@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { Avatar, Badge, Dropdown, FloatButton } from 'antd'
-import { SettingOutlined, SearchOutlined } from '@ant-design/icons'
+import { SettingOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import useAuth from '@/hooks/useAuth'
-import '../index.scss'
 
 const Header: React.FC<HeaderModalProps> = (props) => {
   const { settingsOpen, setSettingsOpen } = props
