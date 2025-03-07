@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'antd'
 import { useDebounceFn } from 'ahooks'
 import { getCurrentDateTime } from '@/utils/common'
@@ -28,9 +28,15 @@ const Dashboard: React.FC = () => {
     }
   )
 
-  setInterval(() => {
-    setNowTime(getCurrentDateTime())
-  }, 1000)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNowTime(getCurrentDateTime())
+    }, 1000)
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
 
   return (
     <div className="dashboard">
