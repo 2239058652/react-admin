@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card } from 'antd'
 import { useDebounceFn } from 'ahooks'
 import { getCurrentDateTime } from '@/utils/common'
@@ -8,10 +8,10 @@ const Dashboard: React.FC = () => {
   const userInfo: IUserInfo = JSON.parse(localStorage.getItem('user') || '{}')
   const options = [
     { value: 'now', label: '实时' },
-    { value: 'b', label: '昨日' },
-    { value: 'c', label: '本周' },
-    { value: 'd', label: '本月' },
-    { value: 'e', label: '本年' }
+    { value: 'yesterday', label: '昨日' },
+    { value: 'week', label: '本周' },
+    { value: 'month', label: '本月' },
+    { value: 'year', label: '本年' }
   ]
   const [selectedValue, setSelectedValue] = useState<string | number | null>('now')
   const [nowTime, setNowTime] = useState<string | null>(getCurrentDateTime())
